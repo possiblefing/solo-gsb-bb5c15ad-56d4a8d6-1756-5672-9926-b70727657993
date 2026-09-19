@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>分支剧情一致性审校</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">⟁</span>
+      <div>
+        <h1>分支剧情一致性审校</h1>
+        <p class="subtitle">布尔状态空间传播 · 不可达场景 / 死选项 / 阻断跳转检测 · 路径溯源</p>
+      </div>
+    </div>
+    <div class="top-actions">
+      <select id="storySelect" title="选择剧情"></select>
+      <button id="newStoryBtn" class="btn">＋ 新建</button>
+      <button id="importBtn" class="btn">导入 JSON</button>
+      <input type="file" id="importFile" accept=".json,application/json" hidden />
+      <button id="exportBtn" class="btn" disabled>导出 JSON</button>
+      <button id="deleteBtn" class="btn btn-danger-ghost" disabled>删除</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <!-- 左：编辑器 -->
+    <section class="pane editor-pane">
+      <div class="pane-head">
+        <h2>剧情编辑</h2>
+        <div class="head-actions">
+          <button id="analyzeBtn" class="btn btn-primary" disabled>重新分析</button>
+          <button id="saveBtn" class="btn btn-primary" disabled>保存并分析</button>
+          <span id="dirtyBadge" class="dirty-badge" hidden>未保存</span>
+        </div>
+      </div>
+
+      <div class="editor-body" id="editorBody" hidden>
+        <div class="card">
+          <label class="field-label">剧情名称</label>
+          <input type="text" id="storyName" class="input" maxlength="200" />
+
+          <label class="field-label">起始场景</label>
+          <select id="startScene" class="input"></select>
+
+          <div class="vars-head">
+            <label class="field-label" style="margin:0">布尔变量（初始值）</label>
+            <button id="addVarBtn" class="btn btn-small">＋ 变量</button>
+          </div>
+          <div id="varList" class="var-list"></div>
+        </div>
+
+        <div id="sceneList" class="scene-list"></div>
+
+        <button id="addSceneBtn" class="btn btn-dashed">＋ 添加场景</button>
+      </div>
+
+      <div class="empty-hint" id="emptyHint">
+        <p>请在上方选择、新建或导入一个剧情。</p>
+      </div>
+    </section>
+
+    <!-- 右：审校结果 -->
+    <section class="pane report-pane">
+      <div class="pane-head">
+        <h2>审校结果</h2>
+        <div id="reportStats" class="report-stats"></div>
+      </div>
+
+      <div id="reportBody" class="report-body">
+        <div class="empty-hint"><p>保存或点击「重新分析」后在此展示问题。</p></div>
+      </div>
+
+      <div class="graph-wrap" id="graphWrap" hidden>
+        <div class="graph-head">
+          <h3>场景可达图</h3>
+          <div class="legend">
+            <span><i class="dot dot-ok"></i>可达</span>
+            <span><i class="dot dot-bad"></i>不可达</span>
+            <span class="legend-line">→ 可达跳转</span>
+            <span class="legend-line dashed">⇢ 阻断跳转</span>
+          </div>
+        </div>
+        <div id="graphHost"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "branching-story-checker",
+  "version": "1.0.0",
+  "description": "分支剧情一致性审校 Web 应用：状态空间传播、不可达场景与死选项检测、路径溯源、JSON 导入导出",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "test": "node test/smoke.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
